@@ -25,3 +25,26 @@ The `DATE` type in Postgres has higher resolution up to the second, which is use
 **Minor changes in the column data types**
 
 Used `CHECK` constraints for the allowable values (instead of `ENUM`). Also had to utilize `CHECK` constraints for number-related data types to assure a non-negative value since there are no unsigned types in Postgres
+
+**Import and cleanup of `route_data.csv`**
+
+Took the data from the LTFRB NCR Jeepney routes. Separated the route name into start route and end route by splitting across the dash from the name (dropped route names without an indicated dash)
+
+```
+-- SELECT * FROM routes;
+
+ route_id |        start_route        |               end_route               | route_length | base_fare
+----------+---------------------------+---------------------------------------+--------------+-----------
+ NCR-A01  | AFP/PNP HOUSING TERM(TAG) | GUADALUPE V MRT                       |            7 |        13
+ NCR-A02  | AFP/PNP(TAGUIG)           | GUADALUPE (ABC) VIA M. ASUN           |            8 |        13
+ NCR-A03  | ALABANG                   | B'BAYAN VIA BICUTAN FTI SSH LOOP      |           10 |        13
+ NCR-A04  | ALABANG                   | BAGUMBAYAN VIA BICUTAN                |            8 |        13
+ NCR-A05  | ALABANG                   | BACLARAN VIA COASTAL                  |           10 |        13
+ NCR-A06  | ALABANG                   | BACLARAN COASTAL                      |            5 |        13
+ NCR-A07  | ALABANG                   | BACLARAN VIA SAN DIONISIO ZAPOTE      |            6 |        13
+ NCR-A08  | ALABANG                   | BACLARAN VIASN DIONISIO ZAPOTE        |           10 |        13
+ NCR-A09  | BACLARAN                  | ALABANG VIA SAN DIONISIO              |            6 |        13
+ NCR-A10  | ALABANG                   | BACLARAN VIA SAN DIONISIO             |            4 |        13
+ ...
+ (770 rows)
+```
